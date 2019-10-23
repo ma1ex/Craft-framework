@@ -12,7 +12,6 @@
 /**
  * Autoload all framework files
  */
-
 spl_autoload_register(function($class) {
     $path_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR;
     $path_namespace = str_replace('\\', DIRECTORY_SEPARATOR, $class . '.php');

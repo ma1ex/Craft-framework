@@ -11,10 +11,24 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
- // Debug
-function debug($var) {
+/**
+ * @param $var
+ * uses var_dump()
+ */
+function debug_v($var) {
     echo '<pre>';
     var_dump($var);
+    echo '</pre>';
+    exit();
+}
+
+/**
+ * @param $var
+ * uses print_r()
+ */
+function debug_p($var) {
+    echo '<pre>';
+    print_r($var);
     echo '</pre>';
     exit();
 }

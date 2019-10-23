@@ -12,9 +12,17 @@
 require_once '../application/lib/dev.php';
 // Autoloader
 require_once '../application/autoload.php';
+// Routes config
+$routes = require_once '../application/config/routes.php';
 
 use application\core\Router;
 
-echo 'Hello, World! <br> I`m a FrontController! <br><br>';
+session_start();
 
-$router = new Router();
+//echo 'Hello, World! <br> I`m a FrontController! <br><br>';
+
+
+$router = new Router($routes);
+//$router->add('test/test', 'qwerty');
+//debug_p($router->getAllRoutes());
+$router->run();
