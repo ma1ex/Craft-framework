@@ -10,8 +10,12 @@
 
 declare(strict_types = 1);
 
-namespace application\core;
+namespace application\Core;
 
+/**
+ * Class Router
+ * @package application\Core
+ */
 class Router {
 
     /**
@@ -38,15 +42,18 @@ class Router {
         }
     }
 
-    public function add($route, $params) {
+    /**
+     * @param string $route Examp: 'catalog/good'
+     * @param array $params Examp:
+     *                              ['controller' => 'controllerName',
+     *                               'action      => 'actionName',
+     *                               'namespace'  => 'app\name\Space']
+     */
+    public function add(string $route, array $params) {
         // Case-sensitive
         //$route = '#^' . $route . '$#';
         // Case-insensitive
         $route = '#^' . $route . '$#i';
-        $this->routes[$route] = $params;
-    }
-
-    public function addRoute(string $route, array $params) {
         $this->routes[$route] = $params;
     }
 
@@ -60,7 +67,7 @@ class Router {
     /**
      * @return bool Return true if route matches or false if dont matches
      */
-    public function match() {
+    public function match(): bool {
         $url = $_SERVER['REQUEST_URI'];
         $url = trim($url, '/');
         foreach($this->routes as $route => $params) {
@@ -72,6 +79,9 @@ class Router {
         return false;
     }
 
+    /**
+     * @return array Segmented URL path
+     */
     public function getUrlPath(): array {
         $url = $_SERVER['REQUEST_URI'];
         $url = filter_var($url, FILTER_SANITIZE_URL);
@@ -82,12 +92,28 @@ class Router {
         return $url;
     }
 
+    /**
+     * Check for URL matches with the router configuration and call
+     * the method in the appropriate controller
+     */
     public function run() {
         if ($this->match()) {
-            $controller = 'application\controllers\\' . ucfirst($this->params['controller']) . 'Controller';
-            if(class_exists($controller)) {
-                new $controller;
+            $pathController = $this->params['namespace'] . '\\' . ucfirst($this->params['controller']) . 'Controller';
+            if(class_exists($pathController)) {
+                // Create new object
+                $controller = new $pathController($this->params);
+                $action = lcfirst($this->params['action']) . 'Action';
+                // Call object method
+                if(method_exists($controller, $action)) {
+                    call_user_func(array($controller, $action));
+                } else {
+                    trigger_error('Method "' . $action . '" not found!', E_USER_ERROR);
+                }
+            } else {
+                trigger_error('Controller "' . $pathController . '" not found!', E_USER_ERROR);
             }
+        } else {
+            trigger_error('URL "' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '" not exist!', E_USER_ERROR);
         }
     }
 }

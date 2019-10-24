@@ -10,10 +10,12 @@
  */
 
 /**
- * Autoload all framework files
+ * Autoload all framework classes
  */
 spl_autoload_register(function($class) {
+    // Current filesystem directory
     $path_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+    // Called classes Namespace
     $path_namespace = str_replace('\\', DIRECTORY_SEPARATOR, $class . '.php');
     $path = $path_dir . $path_namespace;
     if (file_exists($path)) {

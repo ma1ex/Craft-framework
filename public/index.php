@@ -15,7 +15,7 @@ require_once '../application/autoload.php';
 // Routes config
 $routes = require_once '../application/config/routes.php';
 
-use application\core\Router;
+use application\Core\Router;
 
 session_start();
 
@@ -25,4 +25,5 @@ session_start();
 $router = new Router($routes);
 //$router->add('test/test', 'qwerty');
 //debug_p($router->getAllRoutes());
+//debug_p($router->getUrlPath());
 $router->run();
