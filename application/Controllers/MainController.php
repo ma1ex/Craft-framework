@@ -16,7 +16,8 @@ use application\Core\Controller;
 class MainController extends Controller{
 
     public function indexAction() {
-        echo 'MainController->indexAction() called';
+        //echo 'MainController->indexAction() called';
+        $this->view->render('Main page');
     }
 
     public function aboutAction() {

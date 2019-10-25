@@ -32,13 +32,13 @@ class Router {
      * Router constructor.
      * @param array $routes Injection routes array
      */
-    public function __construct(array $routes) {
+    public function __construct(array $routes = []) {
         if (is_array($routes)) {
-            foreach($routes as $key => $value) {
+            /*foreach($routes as $key => $value) {
                 $this->add($key, $value);
-            }
+            }*/
 
-            //$this->routes = $routes;
+            $this->routes = $routes;
         }
     }
 
@@ -49,11 +49,11 @@ class Router {
      *                               'action      => 'actionName',
      *                               'namespace'  => 'app\name\Space']
      */
-    public function add(string $route, array $params) {
+    public function add(string $route, array $params = []) {
         // Case-sensitive
         //$route = '#^' . $route . '$#';
         // Case-insensitive
-        $route = '#^' . $route . '$#i';
+        //$route = '#^' . $route . '$#i';
         $this->routes[$route] = $params;
     }
 
@@ -71,7 +71,7 @@ class Router {
         $url = $_SERVER['REQUEST_URI'];
         $url = trim($url, '/');
         foreach($this->routes as $route => $params) {
-            if(preg_match($route, $url, $matches)) {
+            if(preg_match('#^' . $route . '$#i', $url, $matches)) {
                 $this->params = $params;
                 return true;
             }
@@ -97,11 +97,13 @@ class Router {
      * the method in the appropriate controller
      */
     public function run() {
+        //debug_v($this->routes);
         if ($this->match()) {
             $pathController = $this->params['namespace'] . '\\' . ucfirst($this->params['controller']) . 'Controller';
             if(class_exists($pathController)) {
                 // Create new object
                 $controller = new $pathController($this->params);
+                //$controller = new $pathController($this->routes);
                 $action = lcfirst($this->params['action']) . 'Action';
                 // Call object method
                 if(method_exists($controller, $action)) {

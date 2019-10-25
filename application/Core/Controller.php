@@ -11,6 +11,8 @@
 
 namespace application\Core;
 
+use application\Core\View;
+
 /**
  * Class Controller - BaseController
  * @package application\Core
@@ -22,11 +24,14 @@ abstract class Controller {
      */
     protected $params;
 
+    protected $view;
+
     /**
      * Controller constructor.
      * @param array $params
      */
     public function __construct(array $params) {
         $this->params = $params;
+        $this->view = new View($params);
     }
 }
