@@ -1,4 +1,4 @@
-<h3>Login</h3>
+<h1><?php echo $page_caption ?></h1>
 <form action="">
     <label for="name">Type your name:</label>
     <input type="text" name="name">

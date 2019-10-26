@@ -19,9 +19,6 @@ use application\Core\Router;
 
 session_start();
 
-//echo 'Hello, World! <br> I`m a FrontController! <br><br>';
-
-
 $router = new Router($routes);
 //$router->add('test/test', 'qwerty');
 //debug_p($router->getAllRoutes());

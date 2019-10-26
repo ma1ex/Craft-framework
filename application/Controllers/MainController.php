@@ -15,12 +15,25 @@ use application\Core\Controller;
 
 class MainController extends Controller{
 
+    public function __construct(array $params) {
+        parent::__construct($params);
+        // Полный путь контейнера шаблонов (layout)
+        $this->view->setLayout('..\application\Views\layouts\default.php');
+    }
+
     public function indexAction() {
-        //echo 'MainController->indexAction() called';
-        $this->view->render('Main page');
+        // Полный путь до подключаемого шаблона и перечень пеменных для вывода
+        $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
+            'title' => 'Главная страница',
+            'page_caption' => 'Hello, World! <br> I`m a Main page! <br><br>'
+        ]);
     }
 
     public function aboutAction() {
-        echo 'MainController->aboutAction() called';
+        // Полный путь до подключаемого шаблона и перечень пеменных для вывода
+        $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
+            'title' => 'Об этом сайте',
+            'page_caption' => 'Страница "About"'
+        ]);
     }
 }

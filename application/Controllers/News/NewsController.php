@@ -15,7 +15,16 @@ use application\Core\Controller;
 
 class NewsController extends Controller{
 
+    public function __construct(array $params) {
+        parent::__construct($params);
+        $this->view->setLayout('..\application\Views\layouts\default.php');
+    }
+
     public function showAction() {
-        echo 'NewsController->showAction() called';
+        // Полный путь до подключаемого шаблона и перечень пеменных для вывода
+        $this->view->render('..\application\Views\news\\' . $this->params['action'] . '.php', [
+            'title' => 'Страница Новостей',
+            'page_caption' => 'Вывод всех новостей'
+        ]);
     }
 }
