@@ -13,7 +13,7 @@ namespace application\Controllers;
 
 use application\Core\Controller;
 
-class MainController extends Controller{
+class MainController extends Controller {
 
     public function __construct(array $params) {
         parent::__construct($params);

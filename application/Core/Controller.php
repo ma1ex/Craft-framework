@@ -8,6 +8,8 @@
  * Comment: Base controller
  */
 
+declare(strict_types = 1);
+
 
 namespace application\Core;
 

@@ -8,6 +8,8 @@
  * Comment: Base view class
  */
 
+declare(strict_types = 1);
+
 
 namespace application\Core;
 
@@ -78,4 +80,15 @@ class View {
             trigger_error('Layout "' . $this->layout . '" not found!', E_USER_ERROR);
         }
     }
+
+
+    /*public static function errorCode(int $code, string $pathTemplate = '') {
+        http_response_code($code);
+        $template = $pathTemplate . $code . '.php';
+        if (file_exists($template)) {
+            require_once $template;
+            exit;
+        }
+        exit('Not found...');
+    }*/
 }

@@ -30,7 +30,7 @@ class Router {
 
     /**
      * Router constructor.
-     * @param array $routes Injection routes array
+     * @param array $routes Routes array
      */
     public function __construct(array $routes = []) {
         if (is_array($routes)) {
@@ -96,7 +96,7 @@ class Router {
      * Check for URL matches with the router configuration and call
      * the method in the appropriate controller
      */
-    public function run() {
+    public function run(): void {
         //debug_v($this->routes);
         if ($this->match()) {
             $pathController = $this->params['namespace'] . '\\' . ucfirst($this->params['controller']) . 'Controller';
@@ -109,13 +109,39 @@ class Router {
                 if(method_exists($controller, $action)) {
                     call_user_func(array($controller, $action));
                 } else {
-                    trigger_error('Method "' . $action . '" not found!', E_USER_ERROR);
+                    //trigger_error('Method "' . $action . '" not found!', E_USER_ERROR);
+                    self::errorCode(404, '..\application\Views\errors\\');
                 }
             } else {
-                trigger_error('Controller "' . $pathController . '" not found!', E_USER_ERROR);
+                //trigger_error('Controller "' . $pathController . '" not found!', E_USER_ERROR);
+                self::errorCode(404, '..\application\Views\errors\\');
             }
         } else {
-            trigger_error('URL "' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '" not exist!', E_USER_ERROR);
+            //trigger_error('URL "' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '" not exist!', E_USER_ERROR);
+            //View::errorCode(404, '..\application\Views\errors\\');
+            self::errorCode(404, '..\application\Views\errors\\');
         }
+    }
+
+    /**
+     * @param int $code - Set status code (404, 403, etc...)
+     * @param string $pathTemplate - Full path to custom error template
+     */
+    public static function errorCode(int $code, string $pathTemplate = '') {
+        http_response_code($code);
+        $template = $pathTemplate . $code . '.php';
+        if (file_exists($template)) {
+            require_once $template;
+            exit;
+        }
+        exit('Not found...');
+    }
+
+    /**
+     * @param string $url - URL to redirect
+     */
+    public static function redirect(string $url) {
+        header('Location: ' . $url);
+        exit;
     }
 }
