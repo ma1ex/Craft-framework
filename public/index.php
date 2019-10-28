@@ -8,6 +8,8 @@
  * Comment:
  */
 
+//$memoryStart = memory_get_usage();
+
 // Develop
 require_once '../application/lib/dev.php';
 // Autoloader
@@ -23,4 +25,9 @@ $router = new Router($routes);
 //$router->add('test/test', 'qwerty');
 //debug_p($router->getAllRoutes());
 //debug_p($router->getUrlPath());
+
 $router->run();
+
+//echo convert(memory_get_usage() - $memoryStart);
+getMemory('peak');
+getMemory();

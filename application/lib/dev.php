@@ -5,7 +5,7 @@
  * File: dev.php;
  * Developer: Matvienko Alexey (matvienko.alexey@gmail.com);
  * Date & Time: 22.10.2019, 14:19
- * Comment:
+ * Comment: Developer & debug functions.
  */
  
 ini_set('display_errors', 1);
@@ -31,4 +31,32 @@ function debug_p($var) {
     print_r($var);
     echo '</pre>';
     exit();
+}
+
+/**
+ * @param $size int Size
+ * @return string Rounded size with unit
+ */
+function convert($size) {
+    $unit = ['b','kb','mb','gb','tb','pb'];
+    return @round($size / pow(1024, ($i = floor(log($size,1024)))),2) . ' ' . $unit[$i];
+}
+
+/**
+ * @param string $type : "total" or empty for current memory;
+ *                       "peak" - peak memory.
+ *
+ * Get formatted memory usage info.
+ */
+function getMemory($type = 'total') {
+    if ($type === 'total') {
+        $info = 'Total memory: ' . convert(memory_get_usage());
+        echo '<p style="padding: 5px; border: solid 1px orange; background: lightyellow;">' . $info . '</p>';
+    }
+
+    if ($type === 'peak') {
+        $info = 'Peak memory: ' . convert(memory_get_peak_usage());
+        echo '<p style="padding: 5px; border: solid 1px orange; background: lightyellow;">' . $info . '</p>';
+    }
+
 }

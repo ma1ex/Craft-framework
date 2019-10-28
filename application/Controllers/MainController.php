@@ -12,6 +12,7 @@
 namespace application\Controllers;
 
 use application\Core\Controller;
+use application\Core\Db;
 
 class MainController extends Controller {
 
@@ -22,6 +23,7 @@ class MainController extends Controller {
     }
 
     public function indexAction() {
+        $db = new Db();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
             'title' => 'Главная страница',

@@ -5,7 +5,7 @@
  * File: Controller.php;
  * Developer: Matvienko Alexey (matvienko.alexey@gmail.com);
  * Date & Time: 24.10.2019, 23:15
- * Comment: Base controller
+ * Comment: Base Controller
  */
 
 declare(strict_types = 1);
@@ -26,6 +26,9 @@ abstract class Controller {
      */
     protected $params;
 
+    /**
+     * @var \application\Core\View : View class
+     */
     protected $view;
 
     /**
