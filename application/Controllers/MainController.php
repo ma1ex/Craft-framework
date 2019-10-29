@@ -24,6 +24,12 @@ class MainController extends Controller {
 
     public function indexAction() {
         $db = new Db();
+        $params = ['id' => 1];
+        //$var = $db->query('SELECT name FROM users WHERE id = :id', $params)->getColumn();
+        $var = $db->query('SELECT name, email FROM users')->getAll();
+        //$db->query('SELECT name FROM users WHERE id = :id', $params);
+        //$var = $db->getColumn();
+        debug_p($var);
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
             'title' => 'Главная страница',

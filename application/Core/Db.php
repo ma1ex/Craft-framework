@@ -20,6 +20,14 @@ class Db {
      */
     protected $db;
 
+    /**
+     * @var \PDOStatement
+     */
+    private $query;
+
+    /**
+     * Db constructor.
+     */
     public function __construct() {
         $file = '../application/config/db.php';
         if (file_exists($file)) {
@@ -27,11 +35,10 @@ class Db {
         }
 
         $this->db = $this->getConnect($config);
-
     }
 
     /**
-     * @param array $config
+     * @param array $config : Connect config['host', 'name', 'user', 'password', 'charset']
      * @return PDO|null
      */
     public function getConnect(array $config) {
@@ -55,4 +62,47 @@ class Db {
 
         return null;
     }
+
+    /**
+     * @param string $sql : SQL expression
+     * @param array $args : PDOStatement arguments for binding
+     * @return $this
+     */
+    public function query(string $sql, array $args = []) {
+        $statement = $this->db->prepare($sql);
+        if (!empty($args)) {
+            foreach($args as $key => $value) {
+                $statement->bindValue(':' . $key, $value);
+            }
+        }
+        $statement->execute();
+        $this->query = $statement;
+
+        return $this;
+    }
+
+    /**
+     * @param string $query : SQL expression
+     * @param array $args : PDOStatement arguments for binding
+     * @return array
+     */
+    public function getAll($query = '', array $args = []) {
+        if (!empty($query)) {
+            $this->query($query, $args);
+        }
+        return $this->query->fetchAll();
+    }
+
+    /**
+     * @param string $query : SQL expression
+     * @param array $args : PDOStatement arguments for binding
+     * @return mixed
+     */
+    public function getColumn($query = '', array $args = []) {
+        if (!empty($query)) {
+            $this->query($query, $args);
+        }
+        return $this->query->fetchColumn();
+    }
+
 }

@@ -10,7 +10,7 @@
 
 return [
     'host' => 'localhost',
-    'name' => 'craft-framework', //
+    'name' => 'craft-framework',
     'user' => 'root',
     'password' => '',
     'charset' => 'utf8'
