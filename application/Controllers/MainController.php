@@ -12,8 +12,6 @@
 namespace application\Controllers;
 
 use application\Core\Controller;
-//use application\Core\Model;
-//use application\Core\Db;
 
 class MainController extends Controller {
 
@@ -21,6 +19,7 @@ class MainController extends Controller {
         parent::__construct($params);
         // Полный путь контейнера шаблонов (layout)
         $this->view->setLayout('..\application\Views\layouts\default.php');
+        $this->model = $this->getModel('application\Models', $this->params['controller']);
     }
 
     public function indexAction() {
@@ -30,7 +29,7 @@ class MainController extends Controller {
         //$var = $this->db->query('SELECT name, email FROM users')->getAll();
         //$db->query('SELECT name FROM users WHERE id = :id', $params);
         //$var = $db->getColumn();
-        $var = $this->model->db->getUsers();
+        $var = $this->model->getUsers();
         debug_v($var);
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [

@@ -47,18 +47,6 @@ class View {
         $this->layout = $layout;
     }
 
-    //public function render($title, $vars = []) {
-        // Включение буферизации вывода
-        //ob_start();
-        /* Подключение файла шаблона, загрузка его в буфер и присвоение переменной
-           $content для дальнейшего вывода в файле layout`а */
-        //require '..\application\Views\\' . $this->path . '.php';
-        //$content = ob_get_clean();
-        /* Подключение файла layout`а и передача в него всех переменных для вывода
-           контента */
-        //require '..\application\Views\layouts\\' . $this->layout . '.php';
-    //}
-
     public function render(string $templatePath, array $vars = []) {
         // Включение буферизации вывода
         ob_start();

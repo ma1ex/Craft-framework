@@ -13,8 +13,6 @@ declare(strict_types = 1);
 
 namespace application\Core;
 
-use application\Core\View;
-
 /**
  * Class Controller - BaseController
  * @package application\Core
@@ -47,7 +45,7 @@ abstract class Controller {
         /* А также эти же параметры в конструктор видов, чтобы брать пути к
            используемым шаблонам */
         $this->view = new View($params);
-        $this->model = $this->loadModel('application\Models', $this->params['controller']);
+        //$this->model = $this->loadModel('application\Models', $this->params['controller']);
     }
 
     /**
@@ -55,10 +53,10 @@ abstract class Controller {
      * @param string $nameModel
      * @return mixed
      */
-    public function loadModel(string $namespaceModel, string $nameModel) {
+    public function getModel(string $namespaceModel, string $nameModel) {
         $pathModel = $namespaceModel . '\\' . ucfirst($nameModel);
         if (class_exists($pathModel)) {
-            return new $pathModel();
+            return new $pathModel(new Db());
         }
         //debug_v($pathModel);
 

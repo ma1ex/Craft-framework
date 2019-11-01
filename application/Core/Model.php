@@ -11,14 +11,14 @@
 
 namespace application\Core;
 
-use application\Core\Db;
-
 abstract class Model {
 
-    public $db;
+    /**
+     * @var Db : Injection DataBase Driver
+     */
+    protected $db;
 
-    public function __construct() {
-        $this->db = new Db();
-        debug_v($this->db);
+    public function __construct(Db $db) {
+        $this->db = $db;
     }
 }
