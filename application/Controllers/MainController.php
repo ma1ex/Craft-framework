@@ -12,7 +12,8 @@
 namespace application\Controllers;
 
 use application\Core\Controller;
-use application\Core\Db;
+//use application\Core\Model;
+//use application\Core\Db;
 
 class MainController extends Controller {
 
@@ -23,13 +24,14 @@ class MainController extends Controller {
     }
 
     public function indexAction() {
-        $db = new Db();
+        //$db = new Db();
         $params = ['id' => 1];
         //$var = $db->query('SELECT name FROM users WHERE id = :id', $params)->getColumn();
-        $var = $db->query('SELECT name, email FROM users')->getAll();
+        //$var = $this->db->query('SELECT name, email FROM users')->getAll();
         //$db->query('SELECT name FROM users WHERE id = :id', $params);
         //$var = $db->getColumn();
-        debug_p($var);
+        $var = $this->model->db->getUsers();
+        debug_v($var);
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
             'title' => 'Главная страница',

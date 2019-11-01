@@ -32,6 +32,11 @@ abstract class Controller {
     protected $view;
 
     /**
+     * @var mixed : Load Model class
+     */
+    protected $model;
+
+    /**
      * Controller constructor.
      * @param array $params
      */
@@ -42,5 +47,20 @@ abstract class Controller {
         /* А также эти же параметры в конструктор видов, чтобы брать пути к
            используемым шаблонам */
         $this->view = new View($params);
+        $this->model = $this->loadModel('application\Models', $this->params['controller']);
+    }
+
+    /**
+     * @param string $namespaceModel
+     * @param string $nameModel
+     * @return mixed
+     */
+    public function loadModel(string $namespaceModel, string $nameModel) {
+        $pathModel = $namespaceModel . '\\' . ucfirst($nameModel);
+        if (class_exists($pathModel)) {
+            return new $pathModel();
+        }
+        //debug_v($pathModel);
+
     }
 }
