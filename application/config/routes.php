@@ -11,36 +11,41 @@
 /**
  * @example ['controller' => 'controllerName',
  *          'action      => 'actionName',
- *          'namespace'  => 'app\name\Space']
+ *          'namespace'  => 'App\Name\Space']
  */
 return [
     '' => [
         'controller' => 'main',
         'action' => 'index',
-        'namespace' => 'application\Controllers'
+        'namespace' => 'application\Controllers',
+        'name' => 'Main page'
     ],
 
     'about' => [
         'controller' => 'main',
         'action' => 'about',
-        'namespace' => 'application\Controllers'
+        'namespace' => 'application\Controllers',
+        'name' => 'About'
     ],
 
     'account/register' => [
         'controller' => 'account',
         'action' => 'register',
-        'namespace' => 'application\Controllers\Auth'
+        'namespace' => 'application\Controllers\Auth',
+        'name' => 'Register'
     ],
 
     'account/login' => [
         'controller' => 'account',
         'action' => 'login',
-        'namespace' => 'application\Controllers\Auth'
+        'namespace' => 'application\Controllers\Auth',
+        'name' => 'Login'
     ],
 
     'news/show' => [
         'controller' => 'news',
         'action' => 'show',
-        'namespace' => 'application\Controllers\News'
+        'namespace' => 'application\Controllers\News',
+        'name' => 'News'
     ]
 ];

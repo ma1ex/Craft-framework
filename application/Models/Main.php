@@ -15,7 +15,13 @@ use application\Core\Model;
 
 class Main extends Model {
 
-    public function getUsers() {
-        return $this->db->query('SELECT name, email FROM users')->getAll();
+    public function getAllNews() {
+        //$params = ['id' => 1];
+        //$var = $db->query('SELECT name FROM users WHERE id = :id', $params)->getColumn();
+        //$var = $this->db->query('SELECT name, email FROM users')->getAll();
+        //$db->query('SELECT name FROM users WHERE id = :id', $params);
+        //$var = $db->getColumn();
+
+        return $this->db->query('SELECT * FROM news')->getAll();
     }
 }

@@ -27,6 +27,7 @@ class Db {
 
     /**
      * Db constructor.
+     * Load config and DB connect init.
      */
     public function __construct() {
         $file = '../application/config/db.php';
@@ -34,6 +35,7 @@ class Db {
             $config = require_once $file;
         }
 
+        // Load config
         $this->db = $this->getConnect($config);
     }
 
@@ -51,6 +53,7 @@ class Db {
         $options = array (
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            //PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::MYSQL_ATTR_FOUND_ROWS => true
         );

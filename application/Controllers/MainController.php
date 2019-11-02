@@ -12,37 +12,47 @@
 namespace application\Controllers;
 
 use application\Core\Controller;
+use application\Core\Router;
 
 class MainController extends Controller {
 
+    /**
+     * @var array : Main menu
+     */
+    private $menu = [];
+
     public function __construct(array $params) {
+        // Инициализация базовых параметров в родительском классе
         parent::__construct($params);
-        // Полный путь контейнера шаблонов (layout)
+        // Полный путь до контейнера шаблонов (layout)
         $this->view->setLayout('..\application\Views\layouts\default.php');
+        // Инициализация модели
         $this->model = $this->getModel('application\Models', $this->params['controller']);
+
+        // Формирование главного меню
+        $allRoutes = Router::getAllRoutes();
+        foreach($allRoutes as $link => $name) {
+            if($link === '') {
+                $link = '/';
+            }
+            $this->menu[$link] = $name['name'];
+        }
     }
 
     public function indexAction() {
-        //$db = new Db();
-        $params = ['id' => 1];
-        //$var = $db->query('SELECT name FROM users WHERE id = :id', $params)->getColumn();
-        //$var = $this->db->query('SELECT name, email FROM users')->getAll();
-        //$db->query('SELECT name FROM users WHERE id = :id', $params);
-        //$var = $db->getColumn();
-        $var = $this->model->getUsers();
-        debug_v($var);
+        $templateVars['news'] = $this->model->getAllNews();
+        $templateVars['page_title'] = 'Главная страница';
+        $templateVars['page_caption'] = 'Hello, World! <br> I`m a Main page! <br><br>';
+        $templateVars['menu'] = $this->menu;
+
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
-            'title' => 'Главная страница',
-            'page_caption' => 'Hello, World! <br> I`m a Main page! <br><br>'
-        ]);
+        $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', $templateVars);
     }
 
     public function aboutAction() {
+        $templateVars['page_title'] = 'Об этом сайте';
+        $templateVars['page_caption'] = 'Страница "About"';
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', [
-            'title' => 'Об этом сайте',
-            'page_caption' => 'Страница "About"'
-        ]);
+        $this->view->render('..\application\Views\\' . $this->params['action'] . '.php', $templateVars);
     }
 }

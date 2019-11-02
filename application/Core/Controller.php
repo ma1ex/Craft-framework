@@ -45,7 +45,6 @@ abstract class Controller {
         /* А также эти же параметры в конструктор видов, чтобы брать пути к
            используемым шаблонам */
         $this->view = new View($params);
-        //$this->model = $this->loadModel('application\Models', $this->params['controller']);
     }
 
     /**
@@ -58,7 +57,5 @@ abstract class Controller {
         if (class_exists($pathModel)) {
             return new $pathModel(new Db());
         }
-        //debug_v($pathModel);
-
     }
 }

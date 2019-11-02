@@ -21,7 +21,7 @@ class Router {
     /**
      * @var array Routes array
      */
-    protected $routes = [];
+    protected static $routes = [];
 
     /**
      * @var array Parameters array
@@ -38,7 +38,8 @@ class Router {
                 $this->add($key, $value);
             }*/
 
-            $this->routes = $routes;
+            //$this->routes = $routes;
+            self::$routes = $routes;
         }
     }
 
@@ -54,14 +55,18 @@ class Router {
         //$route = '#^' . $route . '$#';
         // Case-insensitive
         //$route = '#^' . $route . '$#i';
-        $this->routes[$route] = $params;
+        //$this->routes[$route] = $params;
+        self::$routes[$route] = $params;
     }
 
     /**
      * @return array Return all routes
      */
-    public function getAllRoutes(): array {
+    /*public function getAllRoutes(): array {
         return $this->routes;
+    }*/
+    public static function getAllRoutes(): array {
+        return self::$routes;
     }
 
     /**
@@ -70,7 +75,8 @@ class Router {
     public function match(): bool {
         $url = $_SERVER['REQUEST_URI'];
         $url = trim($url, '/');
-        foreach($this->routes as $route => $params) {
+        //foreach($this->routes as $route => $params) {
+        foreach(self::$routes as $route => $params) {
             if(preg_match('#^' . $route . '$#i', $url, $matches)) {
                 $this->params = $params;
                 return true;
@@ -97,7 +103,6 @@ class Router {
      * the method in the appropriate controller
      */
     public function run(): void {
-        //debug_v($this->routes);
         if ($this->match()) {
             $pathController = $this->params['namespace'] . '\\' . ucfirst($this->params['controller']) . 'Controller';
             if(class_exists($pathController)) {
