@@ -37,10 +37,9 @@ class View {
     protected $view = 'index';
 
     public function __construct(array $routeParams = []) {
+        // Init base params
         $this->setParams($routeParams);
-        // Построение пути до шаблона
-        //$this->path = $params['controller'] . DIRECTORY_SEPARATOR . $params['action'];
-        //echo 'path: ' . $this->path . '<br>';
+        $this->add(['headers' => '']);
     }
 
     /**
