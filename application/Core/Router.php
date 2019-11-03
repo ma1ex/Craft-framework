@@ -70,6 +70,22 @@ class Router {
     }
 
     /**
+     * @return mixed : Build the main menu based on the routes
+     *
+     * Формирование главного меню.
+     * Почему именно в этом классе? Т.к. роуты загружаются из внешнего массива (файла), а не строятся динамически на основе разбора $_SERVER['REQUEST_URI'], и их анализом и построением путей занимается именно этот класс, то логичнее всего (как по мне) именно здесь формировать ссылки на все страницы, как, собственно, и в этом же классе делать карту сайта/приложения.
+     *
+     */
+    public static function buildMenu() {
+        $menu = [];
+        foreach(self::getAllRoutes() as $url => $linkName) {
+            $url = APP_HTTP_PATH . $url;
+            $menu[$url] = $linkName['name'];
+        }
+        return $menu;
+    }
+
+    /**
      * @return bool Return true if route matches or false if dont matches
      */
     public function match(): bool {

@@ -12,6 +12,7 @@
 namespace application\Controllers\Auth;
 
 use application\Core\Controller;
+use application\Core\Router;
 
 class AccountController extends Controller {
 
@@ -23,17 +24,23 @@ class AccountController extends Controller {
 
     public function registerAction() {
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->render('..\application\Views\auth\\' . $this->params['action'] . '.php', [
-            'title' => 'Страница регистрации',
-            'page_caption' => 'Введите данные для регистрации'
+        $this->view->setView('..\application\Views\auth\\' . $this->params['action'] . '.php');
+        $this->view->add([
+            'page_title' => 'Страница регистрации',
+            'page_caption' => 'Введите данные для регистрации',
+            'menu' => Router::buildMenu()
         ]);
+        $this->view->render();
     }
 
     public function loginAction() {
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->render('..\application\Views\auth\\' . $this->params['action'] . '.php', [
-            'title' => 'Страница входа',
-            'page_caption' => 'Введите данные, чтобы войти'
+        $this->view->setView('..\application\Views\auth\\' . $this->params['action'] . '.php');
+        $this->view->add([
+            'page_title' => 'Страница входа',
+            'page_caption' => 'Введите данные, чтобы войти',
+            'menu' => Router::buildMenu()
         ]);
+        $this->view->render();
     }
 }

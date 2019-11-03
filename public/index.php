@@ -5,10 +5,14 @@
  * File: index.php;
  * Developer: Matvienko Alexey (matvienko.alexey@gmail.com);
  * Date & Time: 22.10.2019, 13:55
- * Comment:
+ * Comment: Front Controller
  */
 
 //$memoryStart = memory_get_usage();
+
+if (!defined('APP_HTTP_PATH')) {
+    define('APP_HTTP_PATH', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/');
+}
 
 // Develop
 require_once '../application/lib/dev.php';
@@ -27,6 +31,8 @@ $router = new Router($routes);
 //debug_p($router->getUrlPath());
 
 $router->run();
+
+//debug_p($_SERVER);
 
 //echo convert(memory_get_usage() - $memoryStart);
 getMemory('peak');

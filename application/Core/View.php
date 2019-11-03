@@ -5,7 +5,7 @@
  * File: View.php;
  * Developer: Matvienko Alexey (matvienko.alexey@gmail.com);
  * Date & Time: 25.10.2019, 12:57
- * Comment: Base view class
+ * Comment: Base View class
  */
 
 declare(strict_types = 1);
@@ -17,22 +17,27 @@ namespace application\Core;
 class View {
 
     /**
-     * @var Template path
+     * @var array : Router parameters
      */
-    //public $path;
+    protected $routeParams;
 
     /**
-     * @var array Router parameters
+     * @var array : Template vars
      */
-    public $params;
+    protected $data = [];
 
     /**
-     * @var string Default layout
+     * @var string : Name or path to layout file
      */
-    public $layout = 'default';
+    protected $layout = 'default';
 
-    public function __construct(array $params = []) {
-        $this->params = $params;
+    /**
+     * @var string : Name or path to template file
+     */
+    protected $view = 'index';
+
+    public function __construct(array $routeParams = []) {
+        $this->setParams($routeParams);
         // Построение пути до шаблона
         //$this->path = $params['controller'] . DIRECTORY_SEPARATOR . $params['action'];
         //echo 'path: ' . $this->path . '<br>';
@@ -41,23 +46,99 @@ class View {
     /**
      * @param string $layout Full path to layout file
      */
-    public function setLayout(string $layout) {
+    public function setLayout(string $layoutPath): void {
         // TODO: Путь к лэйаутам перенести в конфиг!
         //$this->layout = '..\application\Views\layouts\\' . $layout  . '.php';
-        $this->layout = $layout;
+        $this->layout = $layoutPath;
     }
 
-    public function render(string $templatePath, array $vars = []) {
+    /**
+     * @return string : Return path to layout
+     */
+    public function getLayout(): string {
+        return $this->layout;
+    }
+
+    /**
+     * @param string $view : Set template
+     */
+    public function setView(string $view): void {
+        $this->view = $view;
+    }
+
+    /**
+     * @return string : Return path to view
+     */
+    public function getView(): string {
+        return $this->view;
+    }
+
+    /**
+     * @param string $incResource
+     * @param string $type
+     */
+    public function addHeader(string $incResource, string $type = 'js'): void {
+        static $resource = '';
+        switch ($type) {
+            case 'css':
+                $resource .= '<link rel="stylesheet" href="' . $incResource . '">' . "\r\n";
+                break;
+            case 'js':
+                $resource .= '<script src="' . $incResource .'"></script>' . "\r\n";
+                break;
+            default:
+                $resource .= $incResource . "\r\n";
+        }
+
+        $this->add(['headers' => $resource]);
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params): void {
+        if (is_array($params)) {
+            $this->routeParams = $params;
+        }
+    }
+
+    /**
+     * @return array : Route params
+     */
+    public function getParams(): array {
+        return $this->routeParams;
+    }
+
+    /**
+     * @param array $vars : Template vars = ['key' => 'param']
+     */
+    public function add(array $vars) {
+        if (is_array($vars)) {
+            $this->data = array_merge($this->data, $vars);
+        }
+    }
+
+    /**
+     * @return array : Return all template vars
+     */
+    public function getVars() {
+        return $this->data;
+    }
+
+    /**
+     * Output all view data: layout, template and template variables
+     */
+    public function render(): void {
         // Включение буферизации вывода
         ob_start();
         // Экспорт ключей массива для дальнейшего их использования по именам в шаблоне и лэйауте
-        extract($vars);
+        extract($this->getVars());
         /* Подключение файла шаблона, загрузка его в буфер и присвоение переменной
            $content для дальнейшего вывода в файле layout`а */
-        if (file_exists($templatePath)) {
-            require $templatePath;
+        if (file_exists($this->getView())) {
+            require $this->getView();
         } else {
-            trigger_error('Template "' . $templatePath . '" not found!', E_USER_ERROR);
+            trigger_error('Template "' . $this->getView() . '" not found!', E_USER_ERROR);
         }
         $content = ob_get_clean();
         /* Подключение файла layout`а и передача в него всех переменных для вывода
@@ -69,14 +150,4 @@ class View {
         }
     }
 
-
-    /*public static function errorCode(int $code, string $pathTemplate = '') {
-        http_response_code($code);
-        $template = $pathTemplate . $code . '.php';
-        if (file_exists($template)) {
-            require_once $template;
-            exit;
-        }
-        exit('Not found...');
-    }*/
 }

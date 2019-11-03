@@ -8,6 +8,8 @@
 
     <title><?php echo $page_title ?></title>
 
+    <?php echo $headers ?>
+
 </head>
 <body>
 

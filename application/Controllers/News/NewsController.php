@@ -12,6 +12,7 @@
 namespace application\Controllers\News;
 
 use application\Core\Controller;
+use application\Core\Router;
 
 class NewsController extends Controller{
 
@@ -22,9 +23,12 @@ class NewsController extends Controller{
 
     public function showAction() {
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->render('..\application\Views\news\\' . $this->params['action'] . '.php', [
-            'title' => 'Страница Новостей',
-            'page_caption' => 'Вывод всех новостей'
+        $this->view->setView('..\application\Views\news\\' . $this->params['action'] . '.php');
+        $this->view->add([
+            'page_title' => 'Страница Новостей',
+            'page_caption' => 'Вывод всех новостей',
+            'menu' => Router::buildMenu()
         ]);
+        $this->view->render();
     }
 }

@@ -5,19 +5,24 @@
  * File: routes.php;
  * Developer: Matvienko Alexey (matvienko.alexey@gmail.com);
  * Date & Time: 23.10.2019, 13:38
- * Comment:
+ * Comment: Routes config
  */
 
 /**
  * @example ['controller' => 'controllerName',
- *          'action      => 'actionName',
- *          'namespace'  => 'App\Name\Space']
+ *          'action       => 'actionName',
+ *          'namespace'   => 'App\Name\Space',
+ *          'name'        => 'this_route_name']
  */
 return [
-    '' => [
+    '' => [ // URL
+        // Контроллер, который будет срабатывать на URL
         'controller' => 'main',
+        // Метод контроллера
         'action' => 'index',
+        // Пространство имен, откуда загружать контроллер
         'namespace' => 'application\Controllers',
+        // Имя страницы для вывода в меню
         'name' => 'Main page'
     ],
 
