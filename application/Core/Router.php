@@ -62,9 +62,6 @@ class Router {
     /**
      * @return array Return all routes
      */
-    /*public function getAllRoutes(): array {
-        return $this->routes;
-    }*/
     public static function getAllRoutes(): array {
         return self::$routes;
     }
@@ -91,7 +88,6 @@ class Router {
     public function match(): bool {
         $url = $_SERVER['REQUEST_URI'];
         $url = trim($url, '/');
-        //foreach($this->routes as $route => $params) {
         foreach(self::$routes as $route => $params) {
             if(preg_match('#^' . $route . '$#i', $url, $matches)) {
                 $this->params = $params;
@@ -155,7 +151,7 @@ class Router {
             require_once $template;
             exit;
         }
-        exit('Not found...');
+        exit('404. Not found...');
     }
 
     /**

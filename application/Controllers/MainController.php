@@ -37,7 +37,9 @@ class MainController extends Controller {
             'page_caption' => 'Hello, World! <br> I`m a Main page! <br><br>',
             'menu' => Router::buildMenu()
         ]);
+        debug_p($this->checkACL(['admin' => ['controller' => 'method']]));
         $this->view->render();
+
     }
 
     public function aboutAction() {

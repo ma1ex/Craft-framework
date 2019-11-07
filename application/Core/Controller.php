@@ -58,4 +58,28 @@ abstract class Controller {
             return new $pathModel(new Db());
         }
     }
+
+    public function checkACL(array $acl = []) {
+
+        if ((array) $acl === []) {
+            $acl = [
+                //
+                'all' => [],
+                //
+                'authorized' => [],
+                //
+                'admin' => [],
+                //
+                'guest' => []
+            ];
+        }
+
+        if (isset($acl[]))
+
+        //$res = sizeof($acl) ?? 'Empty';
+
+        return $acl;
+        //exit;
+        //return sizeof($acl); exit;
+    }
 }
