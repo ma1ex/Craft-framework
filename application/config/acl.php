@@ -11,7 +11,8 @@
 return [
     //
     'all' => [
-        'controllerName' => 'methodName',
+        'main' => 'index',
+        'account' => 'register'
     ],
 
     //
@@ -21,7 +22,7 @@ return [
 
     //
     'admin' => [
-        'controllerName' => 'methodName',
+        'account' => 'login',
     ],
 
     //

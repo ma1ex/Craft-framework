@@ -35,6 +35,11 @@ abstract class Controller {
     protected $model;
 
     /**
+     * @var array : ACL
+     */
+    protected $acl;
+
+    /**
      * Controller constructor.
      * @param array $params
      */
@@ -45,41 +50,34 @@ abstract class Controller {
         /* А также эти же параметры в конструктор видов, чтобы брать пути к
            используемым шаблонам */
         $this->view = new View($params);
+        //
+        //$this->checkACL();
+
     }
 
     /**
      * @param string $namespaceModel
      * @param string $nameModel
-     * @return mixed
+     * @return Db | false
      */
     public function getModel(string $namespaceModel, string $nameModel) {
         $pathModel = $namespaceModel . '\\' . ucfirst($nameModel);
         if (class_exists($pathModel)) {
             return new $pathModel(new Db());
         }
+        return false;
     }
 
-    public function checkACL(array $acl = []) {
+    //public function checkACL(array $acl = []) {
+    public function checkACL() {
 
-        if ((array) $acl === []) {
-            $acl = [
-                //
-                'all' => [],
-                //
-                'authorized' => [],
-                //
-                'admin' => [],
-                //
-                'guest' => []
-            ];
+        // TODO: переместить в конфиг!
+        if (file_exists('..\application\config\acl.php')) {
+            $this->acl = (array) require_once '..\application\config\acl.php';
+            //$this->acl = $acl;
         }
 
-        if (isset($acl[]))
+        return $this->acl;
 
-        //$res = sizeof($acl) ?? 'Empty';
-
-        return $acl;
-        //exit;
-        //return sizeof($acl); exit;
     }
 }

@@ -37,7 +37,14 @@ class MainController extends Controller {
             'page_caption' => 'Hello, World! <br> I`m a Main page! <br><br>',
             'menu' => Router::buildMenu()
         ]);
-        debug_p($this->checkACL(['admin' => ['controller' => 'method']]));
+
+        $arr = array_filter($this->checkACL(), function($ar) {
+            return ($ar[$this->params['controller']] == $this->params['action']);
+            //return ($ar['name'] == 'cat 1' AND $ar['id'] == '3');// you can add multiple conditions
+        });
+
+        //debug_p($arr);
+        debug_p($arr);
         $this->view->render();
 
     }
