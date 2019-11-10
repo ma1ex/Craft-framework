@@ -22,15 +22,21 @@ require_once '../application/autoload.php';
 $routes = require_once '../application/config/routes.php';
 
 use application\Core\Router;
+use application\Core\Acl;
 
 session_start();
+
 
 $router = new Router($routes);
 //$router->add('test/test', 'qwerty');
 //debug_p($router->getAllRoutes());
 //debug_p($router->getUrlPath());
 
+Acl::addRule('Auth@login', 1);
+Acl::addRules(['Main@index' => 4, 'Main@about' => 1]);
+
 $router->run();
+
 
 //debug_p($_SERVER);
 

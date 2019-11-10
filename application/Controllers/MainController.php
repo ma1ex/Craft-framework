@@ -11,6 +11,7 @@
 
 namespace application\Controllers;
 
+use application\Core\Acl;
 use application\Core\Controller;
 use application\Core\Router;
 
@@ -38,13 +39,8 @@ class MainController extends Controller {
             'menu' => Router::buildMenu()
         ]);
 
-        $arr = array_filter($this->checkACL(), function($ar) {
-            return ($ar[$this->params['controller']] == $this->params['action']);
-            //return ($ar['name'] == 'cat 1' AND $ar['id'] == '3');// you can add multiple conditions
-        });
-
+        debug_v(Acl::getRules());
         //debug_p($arr);
-        debug_p($arr);
         $this->view->render();
 
     }
