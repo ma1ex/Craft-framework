@@ -27,28 +27,25 @@ class MainController extends Controller {
     }
 
     public function indexAction() {
+        Acl::check();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->setView('..\application\Views\\' . $this->params['action'] . '.php');
         $this->view->addHeader('css/style.css', 'css');
         $this->view->addHeader('js/app.js');
-        $this->view->addHeader('css/style22.css', 'css');
         $this->view->add([
             'news' => $this->model->getAllNews(),
             'page_title' => 'Главная страница',
             'page_caption' => 'Hello, World! <br> I`m a Main page! <br><br>',
             'menu' => Router::buildMenu()
         ]);
-
-        debug_v(Acl::getRules());
-        //debug_p($arr);
         $this->view->render();
 
     }
 
     public function aboutAction() {
+        Acl::check();
         $this->view->setView('..\application\Views\\' . $this->params['action'] . '.php');
-        $this->view->addHeader('css/style2.css', 'css');
-        $this->view->addHeader('js/app2.js');
+        $this->view->addHeader('css/style.css', 'css');
         $this->view->add([
             'page_title' => 'Об этом сайте',
             'page_caption' => 'Страница "About"',

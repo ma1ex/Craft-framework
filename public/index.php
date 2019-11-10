@@ -32,8 +32,20 @@ $router = new Router($routes);
 //debug_p($router->getAllRoutes());
 //debug_p($router->getUrlPath());
 
-Acl::addRule('Auth@login', 1);
-Acl::addRules(['Main@index' => 4, 'Main@about' => 1]);
+/*
+ * ROOT  = 4;
+ * ADMIN = 3;
+ * USER  = 2;
+ * GUEST = 1;
+*/
+$_SESSION['user']['accessLevel'] = 4;
+Acl::addRule('AccountController@login', 3);
+Acl::addRules([
+    'MainController@index' => 1,
+    'MainController@about' => 4,
+    'AccountController@register' => 2,
+    'NewsController@show' => 3,
+]);
 
 $router->run();
 

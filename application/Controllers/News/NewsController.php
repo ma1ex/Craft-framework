@@ -11,6 +11,7 @@
 
 namespace application\Controllers\News;
 
+use application\Core\Acl;
 use application\Core\Controller;
 use application\Core\Router;
 
@@ -22,6 +23,7 @@ class NewsController extends Controller{
     }
 
     public function showAction() {
+        Acl::check();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->setView('..\application\Views\news\\' . $this->params['action'] . '.php');
         $this->view->add([

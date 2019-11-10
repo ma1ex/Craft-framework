@@ -11,6 +11,7 @@
 
 namespace application\Controllers\Auth;
 
+use application\Core\Acl;
 use application\Core\Controller;
 use application\Core\Router;
 
@@ -23,6 +24,7 @@ class AccountController extends Controller {
     }
 
     public function registerAction() {
+        Acl::check();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->setView('..\application\Views\auth\\' . $this->params['action'] . '.php');
         $this->view->add([
@@ -34,6 +36,7 @@ class AccountController extends Controller {
     }
 
     public function loginAction() {
+        Acl::check();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
         $this->view->setView('..\application\Views\auth\\' . $this->params['action'] . '.php');
         $this->view->add([

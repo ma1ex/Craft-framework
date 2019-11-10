@@ -151,7 +151,18 @@ class Router {
             require_once $template;
             exit;
         }
-        exit('404. Not found...');
+
+        switch ($code) {
+            case 400:
+                exit('400. Bad Request.');
+                break;
+            case 403:
+                exit('403. Access Forbidden!');
+                break;
+            case 404:
+                exit('404. Not found...');
+                break;
+        }
     }
 
     /**

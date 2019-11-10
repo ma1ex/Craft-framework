@@ -1,0 +1,11 @@
+/* Styles */
+
+.menu {
+    list-style: none;
+    font-size: 1.5rem;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 5px;
+}
