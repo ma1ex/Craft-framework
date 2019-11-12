@@ -127,7 +127,7 @@ class Router {
                     call_user_func(array($controller, $action));
                 } else {
                     //trigger_error('Method "' . $action . '" not found!', E_USER_ERROR);
-                    self::errorCode(404, '..\application\Views\errors\\');
+                    self::errorCode(404, APP_TPL_ERRORS_PATH);
                 }
             } else {
                 //trigger_error('Controller "' . $pathController . '" not found!', E_USER_ERROR);

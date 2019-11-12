@@ -10,12 +10,14 @@
 
 //$memoryStart = memory_get_usage();
 
-if (!defined('APP_HTTP_PATH')) {
+/*if (!defined('APP_HTTP_PATH')) {
     define('APP_HTTP_PATH', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/');
-}
+}*/
 
 // Develop
 require_once '../application/lib/dev.php';
+// Env config
+require_once '../application/config/env.php';
 // Autoloader
 require_once '../application/autoload.php';
 // Routes config
@@ -26,6 +28,11 @@ use application\Core\Acl;
 
 session_start();
 
+//debug_v($_SERVER);
+//$_ENV['qwqwq'] = 'sdfsdf';
+//debug_v($_ENV);
+//debug_v(getenv('ENV'));
+//debug_v(APP_TPL_PATH);
 
 $router = new Router($routes);
 //$router->add('test/test', 'qwerty');
@@ -38,7 +45,7 @@ $router = new Router($routes);
  * USER  = 2;
  * GUEST = 1;
 */
-$_SESSION['user']['accessLevel'] = 4;
+$_SESSION['user']['accessLevel'] = 2;
 Acl::addRule('AccountController@login', 3);
 Acl::addRules([
     'MainController@index' => 1,
