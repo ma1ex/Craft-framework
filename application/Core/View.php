@@ -29,7 +29,7 @@ class View {
     /**
      * @var string : Name or path to layout file
      */
-    protected $layout = 'default';
+    protected $layout = APP_TPL_LAYOUTS_PATH . 'default.php';
 
     /**
      * @var string : Name or path to template file
@@ -45,10 +45,8 @@ class View {
     /**
      * @param string $layout Full path to layout file
      */
-    public function setLayout(string $layoutPath): void {
-        // TODO: Путь к лэйаутам перенести в конфиг!
-        //$this->layout = '..\application\Views\layouts\\' . $layout  . '.php';
-        $this->layout = $layoutPath;
+    public function setLayout(string $layout): void {
+        $this->layout = APP_TPL_LAYOUTS_PATH . $layout  . '.php';
     }
 
     /**

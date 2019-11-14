@@ -28,7 +28,7 @@ session_start();
 //$_ENV['qwqwq'] = 'sdfsdf';
 //debug_v($_ENV);
 //debug_v(getenv('ENV'));
-//debug_v(APP_TPL_PATH);
+//debug_v(APP_MODELS_PATH);
 
 $router = new Router($routes);
 //$router->add('test/test', 'qwerty');
@@ -41,7 +41,7 @@ $router = new Router($routes);
  * USER  = 2;
  * GUEST = 1;
 */
-$_SESSION['user']['accessLevel'] = 2;
+$_SESSION['user']['accessLevel'] = 4;
 Acl::addRule('AccountController@login', 3);
 Acl::addRules([
     'MainController@index' => 1,

@@ -119,7 +119,7 @@ class Acl {
      */
     protected static function forbidden(): void {
         http_response_code(403);
-        $template = '..\application\Views\errors\403.php';
+        $template = APP_TPL_ERRORS_PATH . '403.php';
         if (file_exists($template)) {
             require_once $template;
             exit;

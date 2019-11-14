@@ -131,12 +131,9 @@ class Router {
                     self::errorCode(404, APP_TPL_ERRORS_PATH);
                 }
             } else {
-                //trigger_error('Controller "' . $pathController . '" not found!', E_USER_ERROR);
                 self::errorCode(404, APP_TPL_ERRORS_PATH);
             }
         } else {
-            //trigger_error('URL "' . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '" not exist!', E_USER_ERROR);
-            //View::errorCode(404, '..\application\Views\errors\\');
             self::errorCode(404, APP_TPL_ERRORS_PATH);
         }
     }

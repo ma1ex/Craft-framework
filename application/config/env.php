@@ -13,6 +13,7 @@ $names = [
     'models' => 'Models', // Name of the directory with Models
     'controllers' => 'Controllers', // Name of the directory with Controllers
     'views' => 'Views', // Name of the directory with Views
+    'layouts' => 'layouts', // Name of the directory with Views/layouts
     'errors' => 'errors', // Name of the directory with Views/errors
     'libs' => 'lib' // Name of the directory with third-party libraries
 ];
@@ -32,6 +33,11 @@ if (!defined('APP_HTTP_PATH')) {
     define('APP_HTTP_PATH', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/');
 }
 
+// Models directory
+if (!defined('APP_MODELS_PATH')) {
+    define('APP_MODELS_PATH', dirname(__DIR__) . DS . $names['models'] . DS);
+}
+
 // View directory
 if (!defined('APP_TPL_PATH')) {
     define('APP_TPL_PATH', dirname(__DIR__) . DS . $names['views'] . DS);
@@ -41,4 +47,11 @@ if (!defined('APP_TPL_PATH')) {
 if (!defined('APP_TPL_ERRORS_PATH')) {
     define('APP_TPL_ERRORS_PATH', APP_TPL_PATH . $names['errors'] . DS);
 }
+
+// Layouts view directory
+if (!defined('APP_TPL_LAYOUTS_PATH')) {
+    define('APP_TPL_LAYOUTS_PATH', APP_TPL_PATH . $names['layouts'] . DS);
+}
+
+
  

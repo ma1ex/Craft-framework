@@ -19,17 +19,18 @@ class NewsController extends Controller{
 
     public function __construct(array $params) {
         parent::__construct($params);
-        $this->view->setLayout('..\application\Views\layouts\default.php');
+        $this->view->add([
+            'menu' => Router::buildMenu()
+        ]);
     }
 
     public function showAction() {
         Acl::check();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->setView('..\application\Views\news\\' . $this->params['action'] . '.php');
+        $this->view->setView(APP_TPL_PATH . 'news\\' . $this->params['action'] . '.php');
         $this->view->add([
             'page_title' => 'Страница Новостей',
             'page_caption' => 'Вывод всех новостей',
-            'menu' => Router::buildMenu()
         ]);
         $this->view->render();
     }
