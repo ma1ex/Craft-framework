@@ -10,12 +10,15 @@
 
 // Application directory names
 $names = [
+    'application' => 'application', // Name of the directory with Application
     'models' => 'Models', // Name of the directory with Models
     'controllers' => 'Controllers', // Name of the directory with Controllers
     'views' => 'Views', // Name of the directory with Views
     'layouts' => 'layouts', // Name of the directory with Views/layouts
     'errors' => 'errors', // Name of the directory with Views/errors
-    'libs' => 'lib' // Name of the directory with third-party libraries
+    'libs' => 'lib', // Name of the directory with third-party libraries
+    // Namespace
+    'namespaceModels' => 'application\Models\\',
 ];
 
 /* =============================================================================
@@ -33,9 +36,18 @@ if (!defined('APP_HTTP_PATH')) {
     define('APP_HTTP_PATH', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/');
 }
 
+// Application base path
+if (!defined('APP_BASE_PATH')) {
+    define('APP_BASE_PATH', $names['application']);
+}
+
 // Models directory
 if (!defined('APP_MODELS_PATH')) {
     define('APP_MODELS_PATH', dirname(__DIR__) . DS . $names['models'] . DS);
+}
+// Models namespace
+if (!defined('APP_MODELS_NAMESPACE')) {
+    define('APP_MODELS_NAMESPACE', $names['namespaceModels']);
 }
 
 // View directory

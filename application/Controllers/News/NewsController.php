@@ -27,7 +27,7 @@ class NewsController extends Controller{
     public function showAction() {
         Acl::check();
         // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->setView(APP_TPL_PATH . 'news\\' . $this->params['action'] . '.php');
+        $this->view->setView('news' . DS . $this->params['action']);
         $this->view->add([
             'page_title' => 'Страница Новостей',
             'page_caption' => 'Вывод всех новостей',

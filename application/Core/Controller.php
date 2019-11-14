@@ -35,49 +35,49 @@ abstract class Controller {
     protected $model;
 
     /**
-     * @var array : ACL
-     */
-    protected $acl;
-
-    /**
      * Controller constructor.
      * @param array $params
      */
     public function __construct(array $params) {
         /* Передача массива всех параметров объекта при его создании, таких как
-           controller, action, namespace */
+           имена controller, action и namespace */
         $this->params = $params;
         /* А также эти же параметры в конструктор видов, чтобы брать пути к
            используемым шаблонам */
         $this->view = new View($params);
-        //
-        //$this->checkACL();
-
     }
 
     /**
-     * @param string $namespaceModel
-     * @param string $nameModel
-     * @return Db | false
+     * Чтобы жестко не привязывать модель к контроллеру,
+     * этот метод позволяет загружать любую модель по требованию
+     *
+     * @param string $modelName
+     * @return null
      */
-    public function getModel(string $namespaceModel, string $nameModel) {
-        $pathModel = $namespaceModel . '\\' . ucfirst($nameModel);
-        if (class_exists($pathModel)) {
-            return new $pathModel(new Db());
+    public function getModel(string $modelName) {
+        if (class_exists($modelName)) {
+            return new $modelName(new Db());
         }
-        return false;
+        return null;
     }
 
-    //public function checkACL(array $acl = []) {
-    public function checkACL() {
-
-        // TODO: переместить в конфиг!
-        if (file_exists('..\application\config\acl.php')) {
-            $this->acl = (array) require_once '..\application\config\acl.php';
-            //$this->acl = $acl;
+    /**
+     * Загрузка модели по умолчанию в зависимости от имени контроллера,
+     * в котором был вызван этот метод. Например, если имя контроллера
+     * MainController, загрузится модель Main, у которой пространство имен
+     * определено константой APP_MODELS_NAMESPACE в файле конфигурации.
+     */
+    public function loadModel(): void {
+        // Разбивает строку на массив, где крайняя ячейка - имя контроллера
+        $classExploded = explode('\\', debug_backtrace()[1]['class']);
+        // Отделение из всего массива полного имени контроллера (класса)
+        $controllerFull = array_pop($classExploded);
+        // Имя контроллера без постфикса
+        $controller = str_replace('Controller', '', $controllerFull);
+        $model = APP_MODELS_NAMESPACE . $controller;
+        if (class_exists($model)) {
+            $this->model = new $model(new Db());
         }
-
-        return $this->acl;
-
     }
+
 }

@@ -17,23 +17,37 @@ use application\Core\Router;
 
 class MainController extends Controller {
 
+    // Параметры при вызове контроллера передаются из роутера
     public function __construct(array $params) {
         // Инициализация базовых параметров в родительском классе
         parent::__construct($params);
+
         // Имя контейнера шаблонов (layout).
         // Можно не указывать, тогда будет использоваться по умолчанию - 'default'
         //$this->view->setLayout('default');
+
         // Инициализация модели
-        $this->model = $this->getModel('application\Models', $this->params['controller']);
+        // Если основная рабочая модель для этого контроллера именем схожа с именем
+        // этого контроллера, то достаточно вызвать метод loadModel().
+        // Или $this->model = $this->getModel(), если нужна сторонняя модель
+        //$this->model = $this->getModel('application\Models\\' . $this->params['controller']);
+        $this->loadModel();
+
+        // Построение главного меню
         $this->view->add([
             'menu' => Router::buildMenu()
         ]);
     }
 
     public function indexAction() {
+        // Проверка прав доступа на вызов этого метода
         Acl::check();
-        // Полный путь до подключаемого шаблона и перечень пеменных для вывода
-        $this->view->setView(APP_TPL_PATH . $this->params['action'] . '.php');
+
+        // Имя подключаемого шаблона
+        // Для метода index можно не указывать, т.к. по умолчанию - 'index'
+        //$this->view->setView($this->params['action']);
+
+        // Перечень пеменных для выводав шаблоне
         $this->view->addHeader('css/style.css', 'css');
         $this->view->addHeader('js/app.js');
         $this->view->add([
@@ -47,7 +61,7 @@ class MainController extends Controller {
 
     public function aboutAction() {
         Acl::check();
-        $this->view->setView(APP_TPL_PATH . $this->params['action'] . '.php');
+        $this->view->setView($this->params['action']);
         $this->view->addHeader('css/style.css', 'css');
         $this->view->add([
             'page_title' => 'Об этом сайте',

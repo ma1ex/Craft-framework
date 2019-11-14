@@ -34,7 +34,7 @@ class View {
     /**
      * @var string : Name or path to template file
      */
-    protected $view = 'index';
+    protected $view = APP_TPL_PATH . 'index.php';
 
     public function __construct(array $routeParams = []) {
         // Init base params
@@ -60,7 +60,7 @@ class View {
      * @param string $view : Set template
      */
     public function setView(string $view): void {
-        $this->view = $view;
+        $this->view = APP_TPL_PATH . $view . '.php';
     }
 
     /**

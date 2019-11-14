@@ -14,10 +14,10 @@
  */
 spl_autoload_register(function($class) {
     // Current filesystem directory
-    $path_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+    $pathDir = dirname(__DIR__) . DIRECTORY_SEPARATOR;
     // Called classes Namespace
-    $path_namespace = str_replace('\\', DIRECTORY_SEPARATOR, $class . '.php');
-    $path = $path_dir . $path_namespace;
+    $pathNamespace = str_replace('\\', DIRECTORY_SEPARATOR, $class . '.php');
+    $path = $pathDir . $pathNamespace;
     if (file_exists($path)) {
         require_once $path;
     } else {

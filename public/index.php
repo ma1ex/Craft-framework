@@ -28,7 +28,7 @@ session_start();
 //$_ENV['qwqwq'] = 'sdfsdf';
 //debug_v($_ENV);
 //debug_v(getenv('ENV'));
-//debug_v(APP_MODELS_PATH);
+//debug_v(APP_BASE_PATH);
 
 $router = new Router($routes);
 //$router->add('test/test', 'qwerty');

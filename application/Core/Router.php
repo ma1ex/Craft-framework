@@ -116,10 +116,10 @@ class Router {
      */
     public function run(): void {
         if ($this->match()) {
-            //$pathController = $this->params['namespace'] . '\\' . ucfirst($this->params['controller']) . 'Controller';
+            // Имя контроллера с пространством имен для автозагрузчика классов
             $pathController = $this->params['namespace'] . DS . ucfirst($this->params['controller']) . 'Controller';
             if(class_exists($pathController)) {
-                // Create new object
+                // Создание объекта контроллера с передачей в конструктор параметров
                 $controller = new $pathController($this->params);
                 //$controller = new $pathController($this->routes);
                 $action = lcfirst($this->params['action']) . 'Action';
