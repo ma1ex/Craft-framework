@@ -14,12 +14,57 @@ namespace application\Core\Http;
 
 class Request {
 
+    /**
+     * @var array
+     */
+    private $queryParams;
+
+    /**
+     * @var null
+     */
+    private $parsedBody;
+
+    /**
+     * Request constructor.
+     * @param array $queryParams
+     * @param null $parsedBody
+     */
+    public function __construct(array $queryParams = [], $parsedBody = null) {
+        $this->queryParams = $queryParams;
+        $this->parsedBody = $parsedBody;
+    }
+
+    /**
+     * @return array
+     */
     public function getQueryParams(): array {
-        return $_GET;
+        return $this->queryParams;
     }
 
+    /**
+     * @param array $query
+     * @return Request
+     */
+    public function withQueryParams(array $query): self {
+        $new = clone $this;
+        $new->queryParams = $query;
+
+        return $new;
+    }
+
+    /**
+     * @return null
+     */
     public function getParsedBody() {
-        return $_POST ?: null;
+        return $this->parsedBody;
     }
 
+    /**
+     * @param $data
+     * @return Request
+     */
+    public function withParsedBody($data): self {
+        $this->parsedBody = $data;
+        return $this;
+    }
 }
